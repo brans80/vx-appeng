@@ -1,0 +1,43 @@
+.for-mob {
+	@include desktop {
+		// stylelint-disable-next-line declaration-no-important
+		display: none !important;
+	}
+}
+
+.for-desk {
+	@include mobile {
+		// stylelint-disable-next-line declaration-no-important
+		display: none !important;
+	}
+}
+
+.is-hidden {
+	// stylelint-disable-next-line declaration-no-important
+	display: none !important;
+}
+
+.not-visible {
+	opacity: 0;
+	pointer-events: none;
+
+	@include mobile {
+		display: none;
+	}
+}
+
+.for-retina-screen {
+	display: none;
+
+	@include retina {
+		display: block;
+	}
+}
+
+.for-common-screen {
+	display: block;
+
+	@include retina {
+		display: none;
+	}
+}
