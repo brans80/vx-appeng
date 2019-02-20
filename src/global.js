@@ -55,7 +55,7 @@ global.toResultTest = toResultTest;
 const levels = [{
 		level: 0,
 		name: 'zero',
-		amount: 4,
+		amount: 3,
 		descr: 'Уровень 0: (Ноль) Вам предстоит пройти тест всего из 10 неправильных глаголов, которые будут сгенерированы из нулевой группы глаголов',
 	},
 	{
