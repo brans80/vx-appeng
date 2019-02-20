@@ -28,7 +28,7 @@ export default {
         var: this.obj.var
       })
     },
-    toResetInput() {
+    toResetCurInput() {
       this.val = '';
     }
   },
@@ -45,7 +45,7 @@ export default {
 
   watch: {
     resetInput: function () {
-      this.toResetInput();
+      this.toResetCurInput();
     },
   },
 }
@@ -77,6 +77,10 @@ export default {
 
   &:disabled {
     background-color: rgba($color-gray, 0.85);
+  }
+
+  .iv-test-form__control.is-error & {
+    border: vh(1) solid rgba($color-red, 1);
   }
 }
 </style>

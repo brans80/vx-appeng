@@ -99,6 +99,17 @@
     padding: vh(13) vh(42);
     height: vh(52);
   }
+
+  .iv-test-form__control.is-error & {
+    background: rgba($color-red, 1);
+    border-color: $color-red;
+
+    &:hover {
+      color: $color-white;
+      background: rgba($color-orange, 1);
+      border-color: $color-orange;
+    }
+  }
 }
 
 </style>

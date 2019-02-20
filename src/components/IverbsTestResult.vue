@@ -6,7 +6,7 @@
   <div class="iv-test-result__content">
     <div class="iv-test-result__item">
       <span>Задано вопросов: </span>
-      <b>{{resultArray.length}}</b>
+      <b>{{getTotalAmount}}</b>
     </div>
     <div class="iv-test-result__item">
       <span>Правильных ответов: </span>
@@ -47,14 +47,12 @@ export default {
   },
   computed: {
     getAmountCorrect() {
-      let cnt = 0;
-      for (let item of global.toResultTest(this.resultArray)) {
-        if (item) {
-          cnt++;
-        }
-      }
-      return cnt;
-    }
+      return this.$store.getters.testCorrectResult;
+    },
+
+    getTotalAmount() {
+      return this.$store.getters.totalAmount;
+    },
   },
 }
 </script>
@@ -68,9 +66,17 @@ export default {
   display: block;
   margin-bottom: vh(30);
 
+  &__title {
+    font-size: vh(24);
+    margin-top: vh(20);
+    margin-bottom: vh(32);
+    line-height: 1.1;
+  }
+
   &__item {
     display: block;
     margin-bottom: vh(15);
+    font-size: vh(16);
   }
 
   &__content {

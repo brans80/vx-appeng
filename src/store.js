@@ -10,6 +10,7 @@ export default new Vuex.Store({
     level: global.levels[0],
     ivTestStatus: 'start',
     ivWorkArray: false,
+    answerObjectsArray: [],
   },
 
   mutations: {
@@ -19,8 +20,15 @@ export default new Vuex.Store({
     changeIvTestStatus(state, newStatus) {
       state.ivTestStatus = newStatus;
     },
-    changeIvWorkArray(state, newArr) {
-      state.ivWorkArray = newArr;
+    changeAnswerObjectsArray(state, newAnswerObjectsArray) {
+      state.answerObjectsArray = [...newAnswerObjectsArray];
+    },
+    changeIvWorkArray(state) {
+      let amount = state.level.amount;
+      let workArr = [];
+
+      workArr = [...global.toMixArray(global.verbsList)].splice(0, amount);
+      state.ivWorkArray =  workArr;
     }
   },
 
@@ -36,15 +44,26 @@ export default new Vuex.Store({
     // },
     ivWorkArray(state) {
 
-      let amount = state.level.amount;
-      let workArr = [];
-      workArr = [...global.toMixArray(global.verbsList)].splice(0, amount);
+      // let amount = state.level.amount;
+      // let workArr = [];
+      // workArr = [...global.toMixArray(global.verbsList)].splice(0, amount);
 
-      return workArr;
+      return state.ivWorkArray;
     },
 
     totalAmount(state) {
       return state.level.amount;
+    },
+
+    testCorrectResult(state) { 
+      let correctAmount = 0;    
+      for(let item of global.toResultTest(state.answerObjectsArray)) {
+        if(item) {
+          correctAmount ++;
+        }
+      }
+
+      return correctAmount;
     }
   },
  
