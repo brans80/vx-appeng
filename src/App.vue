@@ -46,7 +46,7 @@
     letter-spacing: 0;
     text-decoration: none;
     text-transform: uppercase;
-    color: #2a5077;
+    color: #fff;
 
     &.router-link-exact-active {
       color: #ff0;
@@ -100,14 +100,58 @@
     height: vh(52);
   }
 
+  &--for-input {
+    &::before {
+      display: block;
+      width: vh(20);
+    }
+  }
+
+  .iv-test-form__control.is-default & {
+    pointer-events: none;
+
+    &::before {
+      content: '?';
+      color: #fff;
+      font-size: vh(20);
+      line-height: 1;
+    }
+  }
+
   .iv-test-form__control.is-error & {
-    background: rgba($color-red, 1);
-    border-color: $color-red;
+    background: $color-error;
+    border-color: $color-error;
+
+    &::before {
+      content: '×';
+      color: #fff;
+      font-size: vh(28);
+      line-height: 0.5;
+    } 
 
     &:hover {
       color: $color-white;
-      background: rgba($color-orange, 1);
-      border-color: $color-orange;
+      background: lighten($color-error, 15%);
+      border-color: $color-error;
+    }
+  }
+
+  .iv-test-form__control.is-success & {
+    background: rgba($color-success, 1);
+    border-color: $color-success;
+    pointer-events: none;
+
+    &::before {
+      content: '!';
+      color: #fff;
+      font-size: vh(24);
+      line-height: 0.6;
+    } 
+
+    &:hover {
+      color: $color-white;
+      background: lighten($color-success, 15%);
+      border-color: $color-success;
     }
   }
 }
