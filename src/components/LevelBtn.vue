@@ -14,13 +14,14 @@ export default {
     return {
     }
   },
+
   methods: {
     toClick() {
       this.$store.commit('changeLevel', this.levelItem);
       this.$store.commit('changeIvWorkArray');
-      console.log(this.$store.state.ivWorkArray);
     }
   },
+
   computed: {
     isActive() {
      return ( +this.$store.state.level.level === +this.levelItem.level);

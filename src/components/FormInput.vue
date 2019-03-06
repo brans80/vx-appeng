@@ -35,11 +35,6 @@ export default {
   computed: {
     getResetInput() {
       return ''
-      // if(this.resetInput) {
-      //   return ''
-      // } else {
-      //   return ''
-      // };
     }
   },
 
@@ -66,21 +61,39 @@ export default {
   line-height: 1;
   background-color: #fff;
   background-clip: padding-box;
-  border: vh(1) solid rgba($color-gray, 0.5);
+  border: vh(1) solid lighten($color-gray, 20%);
+  box-shadow: inset 0 0 vh(15) lighten($color-gray, 26%);
   border-radius: vh(5);
   transition: border-color .2s ease-in-out, box-shadow .2s ease-in-out;
+  color: $color-black;
+
+  &::placeholder {
+    color: $color-gray;
+  }
 
   &:focus {
     outline: none;
-    border: vh(1) solid rgba($btn-bg-color, 0.5);
+    border: vh(1) solid rgba($btn-bg-color, 0.7);
+    box-shadow: inset 0 0 vh(12) lighten($color-primary, 20%);
+
+    &::placeholder {
+      color: rgba($color-gray, 0);
+    }
   }
 
+
   &:disabled {
-    background-color: rgba($color-gray, 0.85);
+    background-color: lighten($color-gray, 50%);
   }
 
   .iv-test-form__control.is-error & {
-    border: vh(1) solid rgba($color-red, 1);
+    border: vh(1) solid $color-error;
+    box-shadow: inset 0 0 vh(12) lighten($color-error, 20%)
+  }
+
+  .iv-test-form__control.is-success & {
+    border: vh(1) solid $color-success;
+    box-shadow: inset 0 0 vh(12) lighten($color-success, 20%)
   }
 }
 </style>

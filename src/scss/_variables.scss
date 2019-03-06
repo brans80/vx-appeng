@@ -2,15 +2,20 @@
 
 $color-black: #000;
 $color-white: #fff;
-$color-gray: #eee;
+$color-gray: #777;
 $color-blue: #0299df;
 $color-orange: #fd783f;
 $color-yellow: #f4ba0b;
 $color-red: #ff0202;
+$color-green: #22be22;
 
 $btn-bg-color: $color-blue;
 $btn-txt-color: $color-white;
 $color-bg-active-btn: $color-orange;
+
+$color-success: $color-green;
+$color-error: $color-red;
+$color-primary: $color-blue;
 
 // FONTS
 
