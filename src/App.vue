@@ -107,7 +107,7 @@
     }
   }
 
-  .iv-test-form__control.is-default & {
+  .iv-test-form-control.is-default & {
     pointer-events: none;
 
     &::before {
@@ -118,7 +118,7 @@
     }
   }
 
-  .iv-test-form__control.is-error & {
+  .iv-test-form-control.is-error & {
     background: $color-error;
     border-color: $color-error;
 
@@ -136,7 +136,7 @@
     }
   }
 
-  .iv-test-form__control.is-success & {
+  .iv-test-form-control.is-success & {
     background: rgba($color-success, 1);
     border-color: $color-success;
     pointer-events: none;

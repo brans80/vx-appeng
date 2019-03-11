@@ -3,9 +3,6 @@
 </template>
 
 <script>
-// import vars from './../vars.js'
-// import SomeComp from './SomeComp.vue'
-
 export default {
   name: 'FormInput',
   props: {
