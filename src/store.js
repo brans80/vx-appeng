@@ -7,9 +7,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    level: global.levels[0],
+    level: 1,
     ivTestStatus: 'start',
-    ivWorkArray: false,
+    // ivWorkArray: false,
     answerObjectsArray: [],
 
   },
@@ -38,26 +38,50 @@ export default new Vuex.Store({
   },
 
   getters: {
-    // ivCounter(state) {
-    //   let total = state.level.amount;
-    //   let cur = +state.ivTestItemIndex+1;
-    //   return (cur+'/'+total);
-    // },
-    ivWorkArray(state) {
+    levels() {
+      return global.levels;
+    },
 
-      // let amount = state.level.amount;
-      // let workArr = [];
-      // workArr = [...global.toMixArray(global.verbsList)].splice(0, amount);
+    basicVerbsList() {
+      return global.verbsList;
+    },
 
-      return state.ivWorkArray;
+    filteredIvArrByGroup(state, getters) {
+      let lv = getters.levelObj.level;
+      let filteredArr = getters.basicVerbsList.filter(function(verbItem) {
+        
+        if(lv <= 1) {
+          
+          return verbItem.group === 1;
+        }
+        if(lv === 2 || lv === 3) {
+          return verbItem.group === 1 || verbItem.group === 2;
+        }
+        if(lv === 4 || lv === 5) {
+          return verbItem.group === 1 || verbItem.group === 2 || verbItem.group === 3;
+        }
+        if(lv === 6) {
+          return verbItem.group === 1 || verbItem.group === 2 || verbItem.group === 3 || verbItem.group === 4;
+        }
+      });
+      return filteredArr;
+    },
+
+    mixedIvArray(state, getters) {
+      let mixedArr = global.toMixArray(getters.filteredIvArrByGroup);
+      return mixedArr;
+    },  
+
+    ivWorkArray(state, getters) {
+      return getters.mixedIvArray;
     },
 
     levelObj(state) {
-      return state.level;
+      return global.levels[state.level];
     },
 
-    totalAmount(state) {
-      return state.level.amount;
+    totalAmount(state, getters) {
+      return getters.levelObj.amount;
     },
 
     testCorrectResult(state) { 
@@ -71,34 +95,19 @@ export default new Vuex.Store({
       return correctAmount;
     },
 
-    timerVal(state) {
-      let level = state.level.level;
-      let k = ((level + 1) / global.levels.length)*100;
+    timerVal(state, getters) {
+      let level = getters.levelObj.level;
+      let k = ((level + 1) / getters.levels.length)*100;
       if(k <= 30) {
-        return 35;
-      };
-      if(k > 30 && k <= 75) {
-        return 6;
-      };
-      if(k>75 && k<=100) {
-        return 7;
-      };
-    },
-
-    timerStart(state) {
-      let testStatus = state.ivTestStatus;
-      let startTimer;
-
-      if(testStatus === 'test' && state.answerObjectsArray.length === 0) {
-        startTimer = true;
-
-      } else {
-        startTimer = false;
-       
+        return 60;
       }
-
-      return startTimer;
-    }
+      if(k > 30 && k <= 75) {
+        return 50;
+      }
+      if(k>75 && k<=100) {
+        return 40;
+      }
+    },
   },
  
   strict: process.env.NODE_ENV !== 'production', // строгий режим - позволяет изменять хранилище только через мутации

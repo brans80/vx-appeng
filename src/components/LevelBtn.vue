@@ -11,20 +11,22 @@ export default {
     levelItem: Object,
   },
   data: function () {
-    return {
-    }
+    return {}
   },
 
   methods: {
     toClick() {
-      this.$store.commit('changeLevel', this.levelItem);
-      this.$store.commit('changeIvWorkArray');
+      this.$store.commit('changeLevel', this.getLevelNumber);
     }
   },
 
   computed: {
+    getLevelNumber() {
+      return this.levelItem.level;
+    },
+
     isActive() {
-     return ( +this.$store.state.level.level === +this.levelItem.level);
+      return (+this.$store.state.level === +this.levelItem.level);
     }
   },
 }
@@ -34,6 +36,4 @@ export default {
 @import '../scss/_variables.scss';
 
 @import '../scss/_functions.scss';
-
-
 </style>

@@ -1,23 +1,22 @@
 <template>
-<div class="test-timer" v-on:click="toStopTime">
+<div class="test-timer" v-bind:class="getWarningClass">
   <div class="test-timer__val">{{resTime}}</div>
 </div>
 </template>
 
 
 <script>
-// import global from './../global.js'
+import global from './../global.js'
 
 export default {
   name: 'IverbsTestTimer',
   props: {
     time: Number,
-    startTime: Boolean,
+    timerStatus: Boolean,
   },
   data: function () {
     return {
       resTime: this.time,
-      startStatus: this.startTime,
     }
   },
   components: {
@@ -26,7 +25,7 @@ export default {
 
   mounted: function() {
     this.timeInterval = false;
-    if(this.startStatus) {
+    if(this.timerStatus) {
        this.toStartTime();
     }
   },
@@ -34,7 +33,7 @@ export default {
   methods: {
     toResetTime() {
       this.resTime = this.time;
-      this.startStatus = false;
+      this.timerStatus = false;
     },
 
     toStartTime() {
@@ -50,7 +49,6 @@ export default {
 
     toStopTime() {
       clearInterval(this.timeInterval);
-      this.startStatus = false;
     },
 
     toProcessTimeEnd() {
@@ -62,13 +60,29 @@ export default {
   computed: {
     getTime() {
       return +this.resTime
-    }
+    },
+
+    getVerbForms() {
+      return global.verbForms;
+    },
+
+    getWarningClass() {
+      let k = this.resTime / this.time;
+      if(k <= 0.5 && k > 0.25) {
+        return 'is-danger-1'
+      }
+
+      if(k <= 0.25) {
+        return 'is-danger-2'
+      }
+
+      return 'is-default'
+    },
   },
 
   watch: {
-    // эта функция запускается при любом изменении вопроса
-    startTime: function (newVal, oldVal) {
-      console.log('fasertty');
+    timerStatus: function (newVal, oldVal) {
+      this.toStopTime();
     }
   },
 }
@@ -97,6 +111,17 @@ export default {
     height: vh(40);
     border-radius: 50%;
     color: $color-green;
+    transition: all 0.2s linear;
+
+    .is-danger-1 & {
+        border: 2px solid $color-yellow;
+        color: $color-yellow;
+    }
+
+    .is-danger-2 & {
+        border: 2px solid $color-error;
+        color: $color-error;
+    }
   }
 }
 </style>

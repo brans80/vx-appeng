@@ -53,7 +53,7 @@ export default {
     },
 
     levelDescr() {
-      return this.$store.state.level.descr;
+      return this.$store.getters.levelObj.descr;
     },
   },
 }

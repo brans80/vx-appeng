@@ -21,8 +21,15 @@ let toCompareTwoObjects = (obj1, obj2) => {
 	if (Object.keys(obj1).length === 0 || Object.keys(obj2).length === 0) {
 		return false;
 	} else {
+		let compar;
 		for (let k in obj1) {
-			comparisonObj[k] = (obj1[k] === obj2[k])
+			if (obj1[k] === obj2[k]) {
+				compar = 'success';
+			} else {
+				compar = 'error';
+			}
+
+			comparisonObj[k] = compar;
 		}
 	}
 
@@ -36,7 +43,7 @@ let toResultTest = (answerArray) => {
 		let result = true;
 		for (let k in answerArray[i]) {
 
-			if (answerArray[i][k] === false) {
+			if (answerArray[i][k] === 'error') {
 				result = false;
 			}
 		}
@@ -56,43 +63,50 @@ const levels = [{
 		level: 0,
 		name: 'zero',
 		amount: 3,
-		descr: 'Уровень 0: (Ноль) Вам предстоит пройти тест всего из 10 неправильных глаголов, которые будут сгенерированы из нулевой группы глаголов',
+		descr: 'Уровень 0: (Ноль). Вам предстоит пройти тест всего из 10 неправильных глаголов, которые будут сгенерированы из группы глаголов №1',
+		verbsGroups: [1],
 	},
 	{
 		level: 1,
 		name: 'dummy',
 		amount: 20,
-		descr: 'Уровень 1: (Дурачок) Вам предстоит пройти тест из 20 неправильных глаголов, которые будут сгенерированы из нулевой группы глаголов',
+		descr: 'Уровень 1: (Болван). Вам предстоит пройти тест из 20 неправильных глаголов, которые будут сгенерированы из группы глаголов №1',
+		verbsGroups: [1],
 	},
 	{
 		level: 2,
 		name: 'schoolkid',
 		amount: 30,
-		descr: 'Уровень 2: (Школьник) Вам предстоит пройти тест из 30 неправильных глаголов, которые будут сгенерированы из нулевой группы глаголов',
+		descr: 'Уровень 2: (Школьник). Вам предстоит пройти тест из 30 неправильных глаголов, которые будут сгенерированы из групп глаголов №№ 1 и 2',
+		verbsGroups: [1, 2],
 	},
 	{
 		level: 3,
 		name: 'middle',
 		amount: 40,
-		descr: 'Уровень 3: (Средний) Вам предстоит пройти тест из 40 неправильных глаголов, которые будут сгенерированы из нулевой и первой групп глаголов',
+		descr: 'Уровень 3: (Средний). Вам предстоит пройти тест из 40 неправильных глаголов, которые будут сгенерированы из групп глаголов №№ 1 и 2',
+		verbsGroups: [1, 2],
 	},
 	{
 		level: 4,
 		name: 'veteran',
 		amount: 50,
-		descr: 'Уровень 4: (Ветеран) Вам предстоит пройти тест из 50 неправильных глаголов, которые будут сгенерированы из нулевой, первой и второй групп глаголов',
+		descr: 'Уровень 4: (Ветеран). Вам предстоит пройти тест из 50 неправильных глаголов, которые будут сгенерированы из групп глаголов №№ 1, 2, 3',
+		verbsGroups: [1, 2, 3],
 	},
 	{
 		level: 5,
 		name: 'expert',
 		amount: 65,
-		descr: 'Уровень 5: (Эксперт) Вам предстоит пройти тест из 65 неправильных глаголов, которые будут сгенерированы из нулевой, первой и второй групп глаголов',
+		descr: 'Уровень 5: (Эксперт). Вам предстоит пройти тест из 65 неправильных глаголов, которые будут сгенерированы из групп глаголов №№ 1, 2, 3',
+		verbsGroups: [1, 2, 3],
 	},
 	{
 		level: 6,
 		name: 'God',
 		amount: 80,
-		descr: 'Уровень 6: (Божество) Вам предстоит пройти тест из 80 неправильных глаголов, которые будут сгенерированы из нулевой, первой и второй групп глаголов',
+		descr: 'Уровень 6: (Божество). Вам предстоит пройти тест из 80 неправильных глаголов, которые будут сгенерированы из групп глаголов №№ 1, 2, 3, 4',
+		verbsGroups: [1, 2, 3, 4],
 	},
 ]
 
@@ -115,11 +129,12 @@ const verbForms = [{
 
 const verbsList = [{
 		id: 1,
-		rus: 'пребывать, придерживаться чего-либо',
+		rus: 'соблюдать, придерживаться чего-либо, пребывать',
 		infinitive: 'abide',
 		pastSimple: 'abode',
 		pastParticiple: 'abode',
-		group: 1,
+		group: 4,
+		type: 1,
 	},
 	{
 		id: 2,
@@ -127,7 +142,8 @@ const verbsList = [{
 		infinitive: 'arise',
 		pastSimple: 'arose',
 		pastParticiple: 'arisen',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 3,
@@ -135,7 +151,8 @@ const verbsList = [{
 		infinitive: 'awake',
 		pastSimple: 'awoke',
 		pastParticiple: 'awoken',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 4,
@@ -144,14 +161,16 @@ const verbsList = [{
 		pastSimple: 'was/were',
 		pastParticiple: 'been',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 5,
-		rus: 'рождать/рожать ',
+		rus: 'рождать, рожать ',
 		infinitive: 'bear',
 		pastSimple: 'bore',
 		pastParticiple: 'born',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 6,
@@ -160,6 +179,7 @@ const verbsList = [{
 		pastSimple: 'became',
 		pastParticiple: 'become',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 7,
@@ -167,7 +187,8 @@ const verbsList = [{
 		infinitive: 'cling',
 		pastSimple: 'clung',
 		pastParticiple: 'clung',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 8,
@@ -175,7 +196,8 @@ const verbsList = [{
 		infinitive: 'befall',
 		pastSimple: 'befell',
 		pastParticiple: 'befallen',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 9,
@@ -184,22 +206,25 @@ const verbsList = [{
 		pastSimple: 'began',
 		pastParticiple: 'begun',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 10,
-		rus: 'вглядываться/замечать',
+		rus: 'вглядываться, замечать',
 		infinitive: 'behold',
 		pastSimple: 'beheld',
 		pastParticiple: 'beheld',
-		group: 1,
+		group: 4,
+		type: 1,
 	},
 	{
 		id: 11,
-		rus: 'гнуть(ся)/сгибать(ся)',
+		rus: 'гнуть(ся), сгибать(ся)',
 		infinitive: 'bend',
 		pastSimple: 'bent',
 		pastParticiple: 'bent',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 12,
@@ -207,7 +232,8 @@ const verbsList = [{
 		infinitive: 'beseech',
 		pastSimple: 'besought',
 		pastParticiple: 'besought',
-		group: 1,
+		group: 4,
+		type: 1,
 	},
 	{
 		id: 13,
@@ -215,7 +241,8 @@ const verbsList = [{
 		infinitive: 'beset',
 		pastSimple: 'beset',
 		pastParticiple: 'beset',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 14,
@@ -223,15 +250,17 @@ const verbsList = [{
 		infinitive: 'bet',
 		pastSimple: 'bet',
 		pastParticiple: 'bet',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 15,
-		rus: 'предлагать цену/велеть/просить',
+		rus: 'предлагать цену, велеть, просить',
 		infinitive: 'bid',
 		pastSimple: 'bid',
 		pastParticiple: 'bid',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 16,
@@ -239,7 +268,8 @@ const verbsList = [{
 		infinitive: 'bind',
 		pastSimple: 'bound',
 		pastParticiple: 'bound',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 17,
@@ -247,15 +277,17 @@ const verbsList = [{
 		infinitive: 'bite',
 		pastSimple: 'bit',
 		pastParticiple: 'bitten',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 18,
-		rus: 'кровоточить/опорожнять',
+		rus: 'кровоточить, опорожнять',
 		infinitive: 'bleed',
 		pastSimple: 'bled',
 		pastParticiple: 'bled',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 19,
@@ -263,55 +295,62 @@ const verbsList = [{
 		infinitive: 'blow',
 		pastSimple: 'blew',
 		pastParticiple: 'blown',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 20,
-		rus: 'ломат/прерывать/разбивать',
+		rus: 'ломать, прерывать, разбивать',
 		infinitive: 'break',
 		pastSimple: 'broke',
 		pastParticiple: 'broken',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 21,
-		rus: 'порождать/разводить/выводить',
+		rus: 'порождать, разводить, выводить',
 		infinitive: 'breed',
 		pastSimple: 'bred',
 		pastParticiple: 'bred',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 22,
-		rus: 'приносить/приводить',
+		rus: 'приносить, приводить',
 		infinitive: 'bring',
 		pastSimple: 'brought',
 		pastParticiple: 'brought',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 23,
-		rus: 'вещать/распространять',
+		rus: 'вещать, распространять',
 		infinitive: 'broadcast',
 		pastSimple: 'broadcast',
 		pastParticiple: 'broadcast',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 24,
-		rus: 'строить/встраивать',
+		rus: 'строить, встраивать',
 		infinitive: 'build',
 		pastSimple: 'built',
 		pastParticiple: 'built',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 25,
-		rus: 'гореть/сжигать',
+		rus: 'гореть, сжигать',
 		infinitive: 'burn',
 		pastSimple: 'burnt',
 		pastParticiple: 'burnt',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 26,
@@ -319,7 +358,8 @@ const verbsList = [{
 		infinitive: 'burst',
 		pastSimple: 'burst',
 		pastParticiple: 'burst',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 27,
@@ -328,6 +368,7 @@ const verbsList = [{
 		pastSimple: 'bought',
 		pastParticiple: 'bought',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 28,
@@ -336,6 +377,7 @@ const verbsList = [{
 		pastSimple: 'could',
 		pastParticiple: 'could',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 29,
@@ -343,7 +385,8 @@ const verbsList = [{
 		infinitive: 'cast',
 		pastSimple: 'cast',
 		pastParticiple: 'cast',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 30,
@@ -351,7 +394,8 @@ const verbsList = [{
 		infinitive: 'catch',
 		pastSimple: 'caught',
 		pastParticiple: 'caught',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 31,
@@ -360,6 +404,7 @@ const verbsList = [{
 		pastSimple: 'chose',
 		pastParticiple: 'chosen',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 32,
@@ -367,7 +412,8 @@ const verbsList = [{
 		infinitive: 'cling',
 		pastSimple: 'clung',
 		pastParticiple: 'clung',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 33,
@@ -375,7 +421,8 @@ const verbsList = [{
 		infinitive: 'cleave',
 		pastSimple: 'cleft',
 		pastParticiple: 'cloven',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 34,
@@ -383,15 +430,17 @@ const verbsList = [{
 		infinitive: 'clothe',
 		pastSimple: 'clothed',
 		pastParticiple: 'clothed',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 35,
-		rus: 'одеть, одевать',
+		rus: 'приходить, приезжать',
 		infinitive: 'come',
 		pastSimple: 'came',
 		pastParticiple: 'come',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 36,
@@ -400,6 +449,7 @@ const verbsList = [{
 		pastSimple: 'cost',
 		pastParticiple: 'cost',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 37,
@@ -407,7 +457,8 @@ const verbsList = [{
 		infinitive: 'creep',
 		pastSimple: 'crept',
 		pastParticiple: 'crept',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 38,
@@ -415,23 +466,26 @@ const verbsList = [{
 		infinitive: 'cut',
 		pastSimple: 'cut',
 		pastParticiple: 'cut',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 39,
-		rus: 'сметь',
+		rus: 'сметь, дерзать',
 		infinitive: 'dare',
 		pastSimple: 'durst',
 		pastParticiple: 'dared',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 40,
-		rus: 'иметь дело, торговать, рассматривать вопрос',
+		rus: 'торговать, иметь дело, рассматривать вопрос',
 		infinitive: 'deal',
 		pastSimple: 'dealt',
 		pastParticiple: 'dealt',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 41,
@@ -439,7 +493,8 @@ const verbsList = [{
 		infinitive: 'dig',
 		pastSimple: 'dug',
 		pastParticiple: 'dug',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 42,
@@ -447,7 +502,8 @@ const verbsList = [{
 		infinitive: 'dive',
 		pastSimple: 'dove',
 		pastParticiple: 'dived',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 43,
@@ -456,6 +512,7 @@ const verbsList = [{
 		pastSimple: 'did',
 		pastParticiple: 'done',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 44,
@@ -463,7 +520,8 @@ const verbsList = [{
 		infinitive: 'draw',
 		pastSimple: 'drew',
 		pastParticiple: 'drawn',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 45,
@@ -471,7 +529,8 @@ const verbsList = [{
 		infinitive: 'dream',
 		pastSimple: 'dreamt',
 		pastParticiple: 'dreamt',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 46,
@@ -479,7 +538,8 @@ const verbsList = [{
 		infinitive: 'drink',
 		pastSimple: 'drank',
 		pastParticiple: 'drunk',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 47,
@@ -488,6 +548,7 @@ const verbsList = [{
 		pastSimple: 'drove',
 		pastParticiple: 'driven',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 48,
@@ -495,7 +556,8 @@ const verbsList = [{
 		infinitive: 'dwell',
 		pastSimple: 'dwelt',
 		pastParticiple: 'dwelt',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 49,
@@ -504,6 +566,7 @@ const verbsList = [{
 		pastSimple: 'ate',
 		pastParticiple: 'eaten',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 50,
@@ -512,6 +575,7 @@ const verbsList = [{
 		pastSimple: 'fell',
 		pastParticiple: 'fallen',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 51,
@@ -519,7 +583,8 @@ const verbsList = [{
 		infinitive: 'feed',
 		pastSimple: 'fed',
 		pastParticiple: 'fed',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 52,
@@ -528,6 +593,7 @@ const verbsList = [{
 		pastSimple: 'felt',
 		pastParticiple: 'felt',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 53,
@@ -535,7 +601,8 @@ const verbsList = [{
 		infinitive: 'fight',
 		pastSimple: 'fought',
 		pastParticiple: 'fought',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 54,
@@ -544,6 +611,7 @@ const verbsList = [{
 		pastSimple: 'found',
 		pastParticiple: 'found',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 55,
@@ -551,7 +619,8 @@ const verbsList = [{
 		infinitive: 'fit',
 		pastSimple: 'fit',
 		pastParticiple: 'fit',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 56,
@@ -559,7 +628,8 @@ const verbsList = [{
 		infinitive: 'flee',
 		pastSimple: 'fled',
 		pastParticiple: 'fled',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 57,
@@ -567,7 +637,8 @@ const verbsList = [{
 		infinitive: 'fling',
 		pastSimple: 'flung',
 		pastParticiple: 'flung',
-		group: 1,
+		group: 4,
+		type: 1,
 	},
 	{
 		id: 58,
@@ -576,6 +647,7 @@ const verbsList = [{
 		pastSimple: 'flew',
 		pastParticiple: 'flown',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 59,
@@ -583,7 +655,8 @@ const verbsList = [{
 		infinitive: 'forbid',
 		pastSimple: 'forbade',
 		pastParticiple: 'forbidden',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 60,
@@ -591,7 +664,8 @@ const verbsList = [{
 		infinitive: 'forecast',
 		pastSimple: 'forecast/forecasted',
 		pastParticiple: 'forecast/forecasted',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 61,
@@ -599,7 +673,8 @@ const verbsList = [{
 		infinitive: 'forget',
 		pastSimple: 'forgot',
 		pastParticiple: 'forgotten',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 62,
@@ -607,7 +682,8 @@ const verbsList = [{
 		infinitive: 'forego',
 		pastSimple: 'forewent',
 		pastParticiple: 'foregone',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 63,
@@ -615,7 +691,8 @@ const verbsList = [{
 		infinitive: 'foretell',
 		pastSimple: 'foretold',
 		pastParticiple: 'foretold',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 64,
@@ -623,7 +700,8 @@ const verbsList = [{
 		infinitive: 'forgive',
 		pastSimple: 'forgave',
 		pastParticiple: 'forgiven',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 65,
@@ -631,7 +709,8 @@ const verbsList = [{
 		infinitive: 'forsake',
 		pastSimple: 'forsook',
 		pastParticiple: 'forsaken',
-		group: 1,
+		group: 4,
+		type: 1,
 	},
 	{
 		id: 66,
@@ -640,6 +719,7 @@ const verbsList = [{
 		pastSimple: 'froze',
 		pastParticiple: 'frozen',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 67,
@@ -648,6 +728,7 @@ const verbsList = [{
 		pastSimple: 'got',
 		pastParticiple: 'got',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 68,
@@ -655,7 +736,8 @@ const verbsList = [{
 		infinitive: 'gild',
 		pastSimple: 'gilt/gilded',
 		pastParticiple: 'gilt/gilded',
-		group: 1,
+		group: 4,
+		type: 1,
 	},
 	{
 		id: 69,
@@ -664,6 +746,7 @@ const verbsList = [{
 		pastSimple: 'gave',
 		pastParticiple: 'given',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 70,
@@ -672,6 +755,7 @@ const verbsList = [{
 		pastSimple: 'went',
 		pastParticiple: 'gone',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 71,
@@ -679,7 +763,8 @@ const verbsList = [{
 		infinitive: 'grind',
 		pastSimple: 'ground',
 		pastParticiple: 'ground',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 72,
@@ -687,7 +772,8 @@ const verbsList = [{
 		infinitive: 'grow',
 		pastSimple: 'grew',
 		pastParticiple: 'grown',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 73,
@@ -695,7 +781,8 @@ const verbsList = [{
 		infinitive: 'hang',
 		pastSimple: 'hung/hanged',
 		pastParticiple: 'hung/hanged',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 74,
@@ -704,6 +791,7 @@ const verbsList = [{
 		pastSimple: 'had',
 		pastParticiple: 'had',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 75,
@@ -711,7 +799,8 @@ const verbsList = [{
 		infinitive: 'hew',
 		pastSimple: 'hewed',
 		pastParticiple: 'hewed/hewn',
-		group: 1,
+		group: 4,
+		type: 1,
 	},
 	{
 		id: 76,
@@ -720,6 +809,7 @@ const verbsList = [{
 		pastSimple: 'heard',
 		pastParticiple: 'heard',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 77,
@@ -727,7 +817,8 @@ const verbsList = [{
 		infinitive: 'hide',
 		pastSimple: 'hid',
 		pastParticiple: 'hidden',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 78,
@@ -735,7 +826,8 @@ const verbsList = [{
 		infinitive: 'hit',
 		pastSimple: 'hit',
 		pastParticiple: 'hit',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 79,
@@ -744,6 +836,7 @@ const verbsList = [{
 		pastSimple: 'held',
 		pastParticiple: 'held',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 80,
@@ -751,7 +844,8 @@ const verbsList = [{
 		infinitive: 'hurt',
 		pastSimple: 'hurt',
 		pastParticiple: 'hurt',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 81,
@@ -759,7 +853,8 @@ const verbsList = [{
 		infinitive: 'keep',
 		pastSimple: 'kept',
 		pastParticiple: 'kept',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 82,
@@ -767,7 +862,8 @@ const verbsList = [{
 		infinitive: 'kneel',
 		pastSimple: 'knelt/kneeled',
 		pastParticiple: 'knelt/kneeled',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 83,
@@ -775,7 +871,8 @@ const verbsList = [{
 		infinitive: 'knit',
 		pastSimple: 'knit/knitted',
 		pastParticiple: 'knit/knitted',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 84,
@@ -784,14 +881,16 @@ const verbsList = [{
 		pastSimple: 'knew',
 		pastParticiple: 'known',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 85,
-		rus: 'класть',
+		rus: 'прокладывать, класть',
 		infinitive: 'lay',
 		pastSimple: 'laid',
 		pastParticiple: 'laid',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 86,
@@ -799,7 +898,8 @@ const verbsList = [{
 		infinitive: 'lead',
 		pastSimple: 'led',
 		pastParticiple: 'led',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 87,
@@ -807,15 +907,17 @@ const verbsList = [{
 		infinitive: 'lean',
 		pastSimple: 'leant/leaned',
 		pastParticiple: 'leant/leaned',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 88,
-		rus: 'прыгать',
+		rus: 'скакать, прыгать',
 		infinitive: 'leap',
 		pastSimple: 'leapt/leaped',
 		pastParticiple: 'leapt/leaped',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 89,
@@ -824,6 +926,7 @@ const verbsList = [{
 		pastSimple: 'learnt/learned',
 		pastParticiple: 'learnt/learned',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 90,
@@ -832,6 +935,7 @@ const verbsList = [{
 		pastSimple: 'left',
 		pastParticiple: 'left',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 91,
@@ -839,7 +943,8 @@ const verbsList = [{
 		infinitive: 'lend',
 		pastSimple: 'lent',
 		pastParticiple: 'lent',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 92,
@@ -847,7 +952,8 @@ const verbsList = [{
 		infinitive: 'let',
 		pastSimple: 'let',
 		pastParticiple: 'let',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 93,
@@ -856,6 +962,7 @@ const verbsList = [{
 		pastSimple: 'lay',
 		pastParticiple: 'lain',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 94,
@@ -863,7 +970,8 @@ const verbsList = [{
 		infinitive: 'light',
 		pastSimple: 'lit/lighted',
 		pastParticiple: 'lit/lighted',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 95,
@@ -871,7 +979,8 @@ const verbsList = [{
 		infinitive: 'lose',
 		pastSimple: 'lost',
 		pastParticiple: 'lost',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 96,
@@ -880,6 +989,7 @@ const verbsList = [{
 		pastSimple: 'made',
 		pastParticiple: 'made',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 97,
@@ -888,14 +998,16 @@ const verbsList = [{
 		pastSimple: 'might',
 		pastParticiple: 'might',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 98,
-		rus: 'значить, подразумевать',
+		rus: 'иметь в виду, значить, подразумевать',
 		infinitive: 'mean',
 		pastSimple: 'meant',
 		pastParticiple: 'meant',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 99,
@@ -904,6 +1016,7 @@ const verbsList = [{
 		pastSimple: 'met',
 		pastParticiple: 'met',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 100,
@@ -911,7 +1024,8 @@ const verbsList = [{
 		infinitive: 'mishear',
 		pastSimple: 'misheard',
 		pastParticiple: 'misheard',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 101,
@@ -919,7 +1033,8 @@ const verbsList = [{
 		infinitive: 'mislay',
 		pastSimple: 'mislaid',
 		pastParticiple: 'mislaid',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 102,
@@ -927,23 +1042,26 @@ const verbsList = [{
 		infinitive: 'mistake',
 		pastSimple: 'mistook',
 		pastParticiple: 'mistaken',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 103,
-		rus: 'косить',
+		rus: 'косить, скирдовать, жать',
 		infinitive: 'mow',
 		pastSimple: 'mowed',
 		pastParticiple: 'mown',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 104,
-		rus: 'догнать',
+		rus: 'настигать, догнать',
 		infinitive: 'overtake',
 		pastSimple: 'overtook',
 		pastParticiple: 'overtaken',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 105,
@@ -952,6 +1070,7 @@ const verbsList = [{
 		pastSimple: 'paid',
 		pastParticiple: 'paid',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 106,
@@ -959,7 +1078,8 @@ const verbsList = [{
 		infinitive: 'prove',
 		pastSimple: 'proved',
 		pastParticiple: 'proved/proven',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 107,
@@ -968,6 +1088,7 @@ const verbsList = [{
 		pastSimple: 'put',
 		pastParticiple: 'put',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 108,
@@ -975,7 +1096,8 @@ const verbsList = [{
 		infinitive: 'quit',
 		pastSimple: 'quit/quitted',
 		pastParticiple: 'quit/quitted',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 109,
@@ -984,6 +1106,7 @@ const verbsList = [{
 		pastSimple: 'read/red',
 		pastParticiple: 'read/red',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 110,
@@ -991,7 +1114,8 @@ const verbsList = [{
 		infinitive: 'rebuild',
 		pastSimple: 'rebuilt',
 		pastParticiple: 'rebuilt',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 111,
@@ -999,7 +1123,8 @@ const verbsList = [{
 		infinitive: 'rid',
 		pastSimple: 'rid/ridded',
 		pastParticiple: 'rid/ridded',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 112,
@@ -1007,7 +1132,8 @@ const verbsList = [{
 		infinitive: 'ride',
 		pastSimple: 'rode',
 		pastParticiple: 'ridden',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 113,
@@ -1015,7 +1141,8 @@ const verbsList = [{
 		infinitive: 'ring',
 		pastSimple: 'rang',
 		pastParticiple: 'rung',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 114,
@@ -1023,7 +1150,8 @@ const verbsList = [{
 		infinitive: 'rise',
 		pastSimple: 'rose',
 		pastParticiple: 'risen',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 115,
@@ -1032,6 +1160,7 @@ const verbsList = [{
 		pastSimple: 'ran',
 		pastParticiple: 'run',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 116,
@@ -1039,7 +1168,8 @@ const verbsList = [{
 		infinitive: 'saw',
 		pastSimple: 'sawed',
 		pastParticiple: 'sawn/sawed',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 117,
@@ -1048,6 +1178,7 @@ const verbsList = [{
 		pastSimple: 'said',
 		pastParticiple: 'said',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 118,
@@ -1056,14 +1187,16 @@ const verbsList = [{
 		pastSimple: 'saw',
 		pastParticiple: 'seen',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 119,
-		rus: 'искать',
+		rus: 'искать, стремиться, добиваться',
 		infinitive: 'seek',
 		pastSimple: 'sought',
 		pastParticiple: 'sought',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 120,
@@ -1072,6 +1205,7 @@ const verbsList = [{
 		pastSimple: 'sold',
 		pastParticiple: 'sold',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 121,
@@ -1080,6 +1214,7 @@ const verbsList = [{
 		pastSimple: 'sent',
 		pastParticiple: 'sent',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 122,
@@ -1088,6 +1223,7 @@ const verbsList = [{
 		pastSimple: 'set',
 		pastParticiple: 'set',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 123,
@@ -1095,7 +1231,8 @@ const verbsList = [{
 		infinitive: 'sew',
 		pastSimple: 'sewed',
 		pastParticiple: 'sewed/sewn',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 124,
@@ -1103,7 +1240,8 @@ const verbsList = [{
 		infinitive: 'shake',
 		pastSimple: 'shook',
 		pastParticiple: 'shaken',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 125,
@@ -1112,6 +1250,7 @@ const verbsList = [{
 		pastSimple: 'should',
 		pastParticiple: 'should',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 126,
@@ -1119,7 +1258,8 @@ const verbsList = [{
 		infinitive: 'shave',
 		pastSimple: 'shaved',
 		pastParticiple: 'shaved',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 127,
@@ -1127,7 +1267,8 @@ const verbsList = [{
 		infinitive: 'shear',
 		pastSimple: 'sheared',
 		pastParticiple: 'shorn',
-		group: 1,
+		group: 4,
+		type: 1,
 	},
 	{
 		id: 128,
@@ -1135,7 +1276,8 @@ const verbsList = [{
 		infinitive: 'shed',
 		pastSimple: 'shed',
 		pastParticiple: 'shed',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 129,
@@ -1143,15 +1285,17 @@ const verbsList = [{
 		infinitive: 'shine',
 		pastSimple: 'shone/shined',
 		pastParticiple: 'shone/shined',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 130,
 		rus: 'обувать, подковывать',
-		infinitive: '	shoe',
+		infinitive: 'shoe',
 		pastSimple: 'shod',
 		pastParticiple: 'shod',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 131,
@@ -1159,7 +1303,8 @@ const verbsList = [{
 		infinitive: 'shoot',
 		pastSimple: 'shot',
 		pastParticiple: 'shot',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 132,
@@ -1168,6 +1313,7 @@ const verbsList = [{
 		pastSimple: 'showed',
 		pastParticiple: 'shown/showed',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 133,
@@ -1175,7 +1321,8 @@ const verbsList = [{
 		infinitive: 'shrink',
 		pastSimple: 'shrank/shrunk',
 		pastParticiple: 'shrunk',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 134,
@@ -1183,7 +1330,8 @@ const verbsList = [{
 		infinitive: 'shut',
 		pastSimple: 'shut',
 		pastParticiple: 'shut',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 135,
@@ -1191,7 +1339,8 @@ const verbsList = [{
 		infinitive: 'sing',
 		pastSimple: 'sang',
 		pastParticiple: 'sung',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 136,
@@ -1199,7 +1348,8 @@ const verbsList = [{
 		infinitive: 'sink',
 		pastSimple: 'sank',
 		pastParticiple: 'sunk',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 137,
@@ -1208,6 +1358,7 @@ const verbsList = [{
 		pastSimple: 'sat',
 		pastParticiple: 'sat',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 138,
@@ -1215,7 +1366,8 @@ const verbsList = [{
 		infinitive: 'slay',
 		pastSimple: 'slew',
 		pastParticiple: 'slain',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 139,
@@ -1224,6 +1376,7 @@ const verbsList = [{
 		pastSimple: 'slept',
 		pastParticiple: 'slept',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 140,
@@ -1231,15 +1384,17 @@ const verbsList = [{
 		infinitive: 'slide',
 		pastSimple: 'slid',
 		pastParticiple: 'slid',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 141,
-		rus: 'швырять, швырнуть, вешать через плечо, подвешивать',
+		rus: 'метать, швырять, швырнуть, вешать через плечо, подвешивать',
 		infinitive: 'sling',
 		pastSimple: 'slung',
 		pastParticiple: 'slung',
-		group: 1,
+		group: 4,
+		type: 1,
 	},
 	{
 		id: 142,
@@ -1247,7 +1402,8 @@ const verbsList = [{
 		infinitive: 'slit',
 		pastSimple: 'slit',
 		pastParticiple: 'slit',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 143,
@@ -1255,7 +1411,8 @@ const verbsList = [{
 		infinitive: 'smell',
 		pastSimple: 'smelt/smelled',
 		pastParticiple: 'smelt/smelled',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 144,
@@ -1263,7 +1420,8 @@ const verbsList = [{
 		infinitive: 'sow',
 		pastSimple: 'sowed',
 		pastParticiple: 'sowed; sown',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 145,
@@ -1272,6 +1430,7 @@ const verbsList = [{
 		pastSimple: 'spoke',
 		pastParticiple: 'spoken',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 146,
@@ -1279,7 +1438,8 @@ const verbsList = [{
 		infinitive: 'speed',
 		pastSimple: 'sped; speeded',
 		pastParticiple: 'sped; speeded',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 147,
@@ -1287,7 +1447,8 @@ const verbsList = [{
 		infinitive: 'spell',
 		pastSimple: 'spelt/spelled',
 		pastParticiple: 'spelt/spelled',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 148,
@@ -1295,7 +1456,8 @@ const verbsList = [{
 		infinitive: 'spend',
 		pastSimple: 'spent',
 		pastParticiple: 'spent',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 149,
@@ -1303,7 +1465,8 @@ const verbsList = [{
 		infinitive: 'spill',
 		pastSimple: 'spilt',
 		pastParticiple: 'spilt',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 150,
@@ -1311,7 +1474,8 @@ const verbsList = [{
 		infinitive: 'spin',
 		pastSimple: 'spun',
 		pastParticiple: 'spun',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 151,
@@ -1319,7 +1483,8 @@ const verbsList = [{
 		infinitive: 'spit',
 		pastSimple: 'spat',
 		pastParticiple: 'spat',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 152,
@@ -1327,7 +1492,8 @@ const verbsList = [{
 		infinitive: 'split',
 		pastSimple: 'split',
 		pastParticiple: 'split',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 153,
@@ -1335,7 +1501,8 @@ const verbsList = [{
 		infinitive: 'spoil',
 		pastSimple: 'spoilt/spoiled',
 		pastParticiple: 'spoilt/spoiled',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 154,
@@ -1343,7 +1510,8 @@ const verbsList = [{
 		infinitive: 'spread',
 		pastSimple: 'spread',
 		pastParticiple: 'spread',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 155,
@@ -1351,7 +1519,8 @@ const verbsList = [{
 		infinitive: 'spring',
 		pastSimple: 'sprang',
 		pastParticiple: 'sprung',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 156,
@@ -1360,6 +1529,7 @@ const verbsList = [{
 		pastSimple: 'stood',
 		pastParticiple: 'stood',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 157,
@@ -1367,7 +1537,8 @@ const verbsList = [{
 		infinitive: 'steal',
 		pastSimple: 'stole',
 		pastParticiple: 'stolen',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 158,
@@ -1375,7 +1546,8 @@ const verbsList = [{
 		infinitive: 'stick',
 		pastSimple: 'stuck',
 		pastParticiple: 'stuck',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 159,
@@ -1383,7 +1555,8 @@ const verbsList = [{
 		infinitive: 'sting',
 		pastSimple: 'stung',
 		pastParticiple: 'stung',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 160,
@@ -1391,7 +1564,8 @@ const verbsList = [{
 		infinitive: 'stink',
 		pastSimple: 'stank/stunk',
 		pastParticiple: 'stunk',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 161,
@@ -1399,7 +1573,8 @@ const verbsList = [{
 		infinitive: 'strew',
 		pastSimple: 'strewed',
 		pastParticiple: 'strewn/strewed',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 162,
@@ -1407,7 +1582,8 @@ const verbsList = [{
 		infinitive: 'stride',
 		pastSimple: 'strode',
 		pastParticiple: 'stridden',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 163,
@@ -1415,7 +1591,8 @@ const verbsList = [{
 		infinitive: 'strike',
 		pastSimple: 'struck',
 		pastParticiple: 'struck',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 164,
@@ -1423,7 +1600,8 @@ const verbsList = [{
 		infinitive: 'string',
 		pastSimple: 'strung',
 		pastParticiple: 'strung',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 165,
@@ -1431,7 +1609,8 @@ const verbsList = [{
 		infinitive: 'strive',
 		pastSimple: 'strove',
 		pastParticiple: 'striven',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 166,
@@ -1439,7 +1618,8 @@ const verbsList = [{
 		infinitive: 'swear',
 		pastSimple: 'swore',
 		pastParticiple: 'sworn',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 167,
@@ -1447,7 +1627,8 @@ const verbsList = [{
 		infinitive: 'sweep',
 		pastSimple: 'swept',
 		pastParticiple: 'swept',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 168,
@@ -1455,7 +1636,8 @@ const verbsList = [{
 		infinitive: 'swell',
 		pastSimple: 'swelled',
 		pastParticiple: 'swollen; swelled',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 169,
@@ -1464,6 +1646,7 @@ const verbsList = [{
 		pastSimple: 'swam',
 		pastParticiple: 'swum',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 170,
@@ -1471,7 +1654,8 @@ const verbsList = [{
 		infinitive: 'swing',
 		pastSimple: 'swung',
 		pastParticiple: 'swung',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 171,
@@ -1480,6 +1664,7 @@ const verbsList = [{
 		pastSimple: 'took',
 		pastParticiple: 'taken',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 172,
@@ -1488,6 +1673,7 @@ const verbsList = [{
 		pastSimple: 'taught',
 		pastParticiple: 'taught',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 173,
@@ -1495,7 +1681,8 @@ const verbsList = [{
 		infinitive: 'tear',
 		pastSimple: 'tore',
 		pastParticiple: 'torn',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 174,
@@ -1504,6 +1691,7 @@ const verbsList = [{
 		pastSimple: 'told',
 		pastParticiple: 'told',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 175,
@@ -1512,6 +1700,7 @@ const verbsList = [{
 		pastSimple: 'thought',
 		pastParticiple: 'thought',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 176,
@@ -1519,7 +1708,8 @@ const verbsList = [{
 		infinitive: 'throw',
 		pastSimple: 'threw',
 		pastParticiple: 'thrown',
-		group: 1,
+		group: 2,
+		type: 1,
 	},
 	{
 		id: 177,
@@ -1527,15 +1717,17 @@ const verbsList = [{
 		infinitive: 'thrust',
 		pastSimple: 'thrust',
 		pastParticiple: 'thrust',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 178,
 		rus: 'ступать',
 		infinitive: 'tread',
 		pastSimple: 'trod',
-		pastParticiple: 'trod; trodden',
-		group: 1,
+		pastParticiple: 'trod/trodden',
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 179,
@@ -1543,7 +1735,8 @@ const verbsList = [{
 		infinitive: 'unbend',
 		pastSimple: 'unbent',
 		pastParticiple: 'unbent',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 180,
@@ -1551,7 +1744,8 @@ const verbsList = [{
 		infinitive: 'undergo',
 		pastSimple: 'underwent',
 		pastParticiple: 'undergone',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
 	{
 		id: 181,
@@ -1560,6 +1754,7 @@ const verbsList = [{
 		pastSimple: 'understood',
 		pastParticiple: 'understood',
 		group: 1,
+		type: 1,
 	},
 	{
 		id: 182,
@@ -1567,16 +1762,125 @@ const verbsList = [{
 		infinitive: 'undertake',
 		pastSimple: 'undertook',
 		pastParticiple: 'undertaken',
-		group: 1,
+		group: 3,
+		type: 1,
 	},
-
 	{
-		id: 0,
-		rus: '00000',
-		infinitive: '0000',
-		pastSimple: '0000',
-		pastParticiple: '00000',
+		id: 183,
+		rus: 'опрокидывать, обжимать',
+		infinitive: 'upset',
+		pastSimple: 'upset',
+		pastParticiple: 'upset',
+		group: 3,
+		type: 1,
+	},
+	{
+		id: 184,
+		rus: 'будить, просыпаться',
+		infinitive: 'wake',
+		pastSimple: 'woke/waked',
+		pastParticiple: 'woken/waked',
+		group: 2,
+		type: 1,
+	},
+	{
+		id: 185,
+		rus: 'носить (одежду)',
+		infinitive: 'wear',
+		pastSimple: 'wore',
+		pastParticiple: 'worn',
+		group: 2,
+		type: 1,
+	},
+	{
+		id: 186,
+		rus: 'ткать',
+		infinitive: 'weave',
+		pastSimple: 'wove/weaved',
+		pastParticiple: 'woven/weaved',
+		group: 3,
+		type: 1,
+	},
+	{
+		id: 187,
+		rus: 'венчать(ся), выдавать замуж',
+		infinitive: 'wed',
+		pastSimple: 'wed/wedded',
+		pastParticiple: 'wed/wedded',
+		group: 2,
+		type: 1,
+	},
+	{
+		id: 188,
+		rus: 'плакать',
+		infinitive: 'weep',
+		pastSimple: 'wept',
+		pastParticiple: 'wept',
+		group: 2,
+		type: 1,
+	},
+	{
+		id: 189,
+		rus: 'хотеть быть',
+		infinitive: 'will',
+		pastSimple: 'would',
+		pastParticiple: 'would',
+		group: 2,
+		type: 1,
+	},
+	{
+		id: 190,
+		rus: 'мочить',
+		infinitive: 'wet',
+		pastSimple: 'wet/wetted',
+		pastParticiple: 'wet/wetted',
+		group: 3,
+		type: 1,
+	},
+	{
+		id: 191,
+		rus: 'выигрывать, получать',
+		infinitive: 'win',
+		pastSimple: 'won',
+		pastParticiple: 'won',
 		group: 1,
+		type: 1,
+	},
+	{
+		id: 192,
+		rus: 'заводить (механизм), виться',
+		infinitive: 'wind',
+		pastSimple: 'wound',
+		pastParticiple: 'wound',
+		group: 3,
+		type: 1,
+	},
+	{
+		id: 193,
+		rus: 'брать назад, отнимать',
+		infinitive: 'withdraw',
+		pastSimple: 'withdrew',
+		pastParticiple: 'withdrawn',
+		group: 3,
+		type: 1,
+	},
+	{
+		id: 194,
+		rus: 'жать (хлеб), выжимать, скручивать',
+		infinitive: 'wring',
+		pastSimple: 'wrung',
+		pastParticiple: 'wrung',
+		group: 4,
+		type: 1,
+	},
+	{
+		id: 195,
+		rus: 'писать',
+		infinitive: 'write',
+		pastSimple: 'wrote',
+		pastParticiple: 'written',
+		group: 1,
+		type: 1,
 	},
 ];
 
