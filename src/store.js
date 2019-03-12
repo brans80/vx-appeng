@@ -9,8 +9,9 @@ export default new Vuex.Store({
   state: {
     level: 1,
     ivTestStatus: 'start',
-    // ivWorkArray: false,
     answerObjectsArray: [],
+    //ivRulesTestPopupShow: false,
+    popupsShow: {'ivRulesTest': false},
 
   },
 
@@ -31,6 +32,11 @@ export default new Vuex.Store({
       workArr = [...global.toMixArray(global.verbsList)].splice(0, amount);
       state.ivWorkArray =  workArr;
     },
+    changeShowPopup(state, obj) {
+      let target = obj['target'];
+      let show = obj['show'];
+      state.popupsShow[target] = show;
+    }
   },
 
   actions: {
@@ -38,6 +44,11 @@ export default new Vuex.Store({
   },
 
   getters: {
+
+    popupsShow(state) {
+      return state.popupsShow;
+    },
+
     levels() {
       return global.levels;
     },
