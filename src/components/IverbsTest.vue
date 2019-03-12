@@ -17,6 +17,9 @@
     </section>
 
   </div>
+  <PopUp v-show="getIvRulesTestPopupShow" ref='ivRulesTest' v-bind:target="'ivRulesTest'">
+
+  </PopUp>
 </div>
 </template>
 
@@ -25,6 +28,7 @@ import global from './../global.js'
 import IverbsTestStart from './IverbsTestStart.vue'
 import IverbsTestForm from './IverbsTestForm.vue'
 import IverbsTestResult from './IverbsTestResult.vue'
+import PopUp from './PopUp.vue'
 
 export default {
   name: 'IverbsTest',
@@ -41,6 +45,7 @@ export default {
     IverbsTestStart,
     IverbsTestForm,
     IverbsTestResult,
+    PopUp,
   },
 
   methods: {
@@ -56,6 +61,9 @@ export default {
     testStatusResult() {
       return (this.$store.state.ivTestStatus === "result");
     },
+    getIvRulesTestPopupShow() {
+      return this.$store.getters.popupsShow['ivRulesTest'];
+    }
 
   },
 }

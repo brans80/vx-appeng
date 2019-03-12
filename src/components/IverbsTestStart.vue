@@ -13,10 +13,12 @@
     {{levelDescr}}
   </div>
   <div class="iv-test-start__start-btn-wrap">
+    <button class="btn" v-on:click="toChangeShowIvRulesPopup('ivRulesTest')">Ознакомиться с правилами</button>
     <button class="btn btn--big" type="button" v-on:click = "toTestForm">
       Пройти тест
     </button>
   </div>
+
 </div>
 </template>
 
@@ -45,6 +47,13 @@ export default {
       this.$store.commit('changeIvTestStatus', 'test');
 
       //this.$emit('on-restart-test');
+    },
+
+    toChangeShowIvRulesPopup(target) {
+      this.$store.commit('changeShowPopup', {
+        target: target,
+        show: true
+      });
     }
   },
   computed: {
@@ -99,8 +108,10 @@ export default {
   }
 
   &__start-btn-wrap {
-    display: block;
+    display: flex;
     margin-top: vh(25);
+    justify-content: space-between;
+    align-items: center;
   }
 }
 </style>
