@@ -14,6 +14,7 @@
   </div>
   <div class="iv-test-start__start-btn-wrap">
     <button class="btn" v-on:click="toChangeShowIvRulesPopup('ivRulesTest')">Ознакомиться с правилами</button>
+    <button class="btn" v-on:click="toTestTab">Повторить глаголы</button>
     <button class="btn btn--big" type="button" v-on:click = "toTestForm">
       Пройти тест
     </button>
@@ -45,8 +46,10 @@ export default {
     toTestForm() {
       this.$store.commit('changeIvWorkArray');
       this.$store.commit('changeIvTestStatus', 'test');
+    },
 
-      //this.$emit('on-restart-test');
+    toTestTab() {
+      this.$store.commit('changeIvTestStatus', 'tab');
     },
 
     toChangeShowIvRulesPopup(target) {
