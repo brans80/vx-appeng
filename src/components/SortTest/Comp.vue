@@ -7,11 +7,9 @@
 </template>
 
 <script>
-// import vars from './../vars.js'
-// import SomeComp from './SomeComp.vue'
-import draggable from 'vuedraggable'
+
 export default {
-  name: 'draggable,',
+  name: 'Comp',
   props: {
 
   },
@@ -20,9 +18,7 @@ export default {
       
     }
   },
-  components: {
-    draggable,
-  },
+
 }
 </script>
 

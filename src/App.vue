@@ -1,12 +1,17 @@
 <template>
 <div id="app" class="app">
   <div id="nav" class="nav">
-    <router-link class="nav__link" to="/">Home</router-link>
-    <router-link class="nav__link" to="/IverbsTest">Irregular verbs</router-link>
+    <router-link class="nav__link" to="/">home</router-link>
+    <router-link class="nav__link" to="/iverbs-test">iv</router-link>
+    <router-link class="nav__link" to="/sort-phrases">sort</router-link>
   </div>
   <router-view />
 </div>
 </template>
+
+<script>
+
+</script>
 
 <style lang="scss">
 @import 'scss/_variables.scss';
@@ -104,6 +109,15 @@
     &::before {
       display: block;
       width: vh(20);
+    }
+  }
+
+  &--white-mod {
+    background-color: $color-white;
+    color: $color-blue;
+
+    &:hover {
+      background-color: rgba($color-white, 0.8);
     }
   }
 

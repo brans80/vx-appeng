@@ -7,6 +7,11 @@
       </IverbsTestStart>
     </section>
 
+    <section class="iv-test__tab" v-if="testStatusTab">
+      <IverbsTestTab>
+      </IverbsTestTab>
+    </section>
+
     <section class="iv-test__form" v-if="testStatusForm">
       <IverbsTestForm></IverbsTestForm>
     </section>
@@ -28,6 +33,7 @@ import global from './../global.js'
 import IverbsTestStart from './IverbsTestStart.vue'
 import IverbsTestForm from './IverbsTestForm.vue'
 import IverbsTestResult from './IverbsTestResult.vue'
+import IverbsTestTab from './IverbsTestTab.vue'
 import PopUp from './PopUp.vue'
 
 export default {
@@ -45,6 +51,7 @@ export default {
     IverbsTestStart,
     IverbsTestForm,
     IverbsTestResult,
+    IverbsTestTab,
     PopUp,
   },
 
@@ -60,6 +67,9 @@ export default {
     },
     testStatusResult() {
       return (this.$store.state.ivTestStatus === "result");
+    },
+    testStatusTab() {
+      return (this.$store.state.ivTestStatus === "tab");
     },
     getIvRulesTestPopupShow() {
       return this.$store.getters.popupsShow['ivRulesTest'];
@@ -93,7 +103,13 @@ export default {
     width: 100%;
     width: vh(800);
     height: auto;
+    max-height: 74%;
     background: rgba($color-white, 0.55);
+  }
+
+  &__tab {
+    padding-bottom: vh(15);
+    overflow: hidden;
   }
 }
 </style>

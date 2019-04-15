@@ -53,11 +53,37 @@ let toResultTest = (answerArray) => {
 	return resultArr;
 };
 
+let toEqualTwoArrs = (arr1, arr2) => {
+	for(let k in arr1) {
+		for(let k in arr2) {
+			if(arr1[k] !== arr2[k]) {
+					return false
+			}
+		}
+	}
+	return true;
+}
+
 global.toMixArray = toMixArray;
 global.toCompareTwoObjects = toCompareTwoObjects;
 global.toResultTest = toResultTest;
+global.toEqualTwoArrs = toEqualTwoArrs;
 
 // vars
+
+const phrases = [{
+		id: 1,
+		level: 1,
+		rus: 'Это очень мило с вашей стороны!',
+		eng: 'It is very kind of you',
+	},
+	{
+		id: 2,
+		level: 1,
+		rus: 'Рад встрече с тобой!',
+		eng: 'Nice meet you',
+	},
+];
 
 const levels = [{
 		level: 0,
@@ -108,7 +134,7 @@ const levels = [{
 		descr: 'Уровень 6: (Божество). Вам предстоит пройти тест из 80 неправильных глаголов, которые будут сгенерированы из групп глаголов №№ 1, 2, 3, 4',
 		verbsGroups: [1, 2, 3, 4],
 	},
-]
+];
 
 const verbForms = [{
 		id: 1,
@@ -165,7 +191,7 @@ const verbsList = [{
 	},
 	{
 		id: 5,
-		rus: 'рождать, рожать ',
+		rus: 'рождать, рожать',
 		infinitive: 'bear',
 		pastSimple: 'bore',
 		pastParticiple: 'born',
@@ -174,6 +200,15 @@ const verbsList = [{
 	},
 	{
 		id: 6,
+		rus: 'бить',
+		infinitive: 'beat',
+		pastSimple: 'beat',
+		pastParticiple: 'beaten',
+		group: 1,
+		type: 1,
+	},
+	{
+		id: 7,
 		rus: 'становиться, делаться',
 		infinitive: 'become',
 		pastSimple: 'became',
@@ -181,15 +216,7 @@ const verbsList = [{
 		group: 1,
 		type: 1,
 	},
-	{
-		id: 7,
-		rus: 'цепляться',
-		infinitive: 'cling',
-		pastSimple: 'clung',
-		pastParticiple: 'clung',
-		group: 2,
-		type: 1,
-	},
+
 	{
 		id: 8,
 		rus: 'случаться',
@@ -508,7 +535,7 @@ const verbsList = [{
 	{
 		id: 43,
 		rus: 'делать',
-		infinitive: 'do/does',
+		infinitive: 'do',
 		pastSimple: 'did',
 		pastParticiple: 'done',
 		group: 1,
@@ -1887,5 +1914,6 @@ const verbsList = [{
 global.verbsList = verbsList;
 global.levels = levels;
 global.verbForms = verbForms;
+global.phrases = phrases;
 
 export default global;

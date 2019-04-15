@@ -10,8 +10,9 @@ export default new Vuex.Store({
     level: 1,
     ivTestStatus: 'start',
     answerObjectsArray: [],
-    //ivRulesTestPopupShow: false,
-    popupsShow: {'ivRulesTest': false},
+    popupsShow: {
+      'ivRulesTest': false
+    },
 
   },
 
@@ -30,7 +31,7 @@ export default new Vuex.Store({
       let workArr = [];
 
       workArr = [...global.toMixArray(global.verbsList)].splice(0, amount);
-      state.ivWorkArray =  workArr;
+      state.ivWorkArray = workArr;
     },
     changeShowPopup(state, obj) {
       let target = obj['target'];
@@ -59,19 +60,19 @@ export default new Vuex.Store({
 
     filteredIvArrByGroup(state, getters) {
       let lv = getters.levelObj.level;
-      let filteredArr = getters.basicVerbsList.filter(function(verbItem) {
-        
-        if(lv <= 1) {
-          
+      let filteredArr = getters.basicVerbsList.filter(function (verbItem) {
+
+        if (lv <= 1) {
+
           return verbItem.group === 1;
         }
-        if(lv === 2 || lv === 3) {
+        if (lv === 2 || lv === 3) {
           return verbItem.group === 1 || verbItem.group === 2;
         }
-        if(lv === 4 || lv === 5) {
+        if (lv === 4 || lv === 5) {
           return verbItem.group === 1 || verbItem.group === 2 || verbItem.group === 3;
         }
-        if(lv === 6) {
+        if (lv === 6) {
           return verbItem.group === 1 || verbItem.group === 2 || verbItem.group === 3 || verbItem.group === 4;
         }
       });
@@ -81,7 +82,7 @@ export default new Vuex.Store({
     mixedIvArray(state, getters) {
       let mixedArr = global.toMixArray(getters.filteredIvArrByGroup);
       return mixedArr;
-    },  
+    },
 
     ivWorkArray(state, getters) {
       return getters.mixedIvArray;
@@ -95,11 +96,11 @@ export default new Vuex.Store({
       return getters.levelObj.amount;
     },
 
-    testCorrectResult(state) { 
-      let correctAmount = 0;    
-      for(let item of global.toResultTest(state.answerObjectsArray)) {
-        if(item) {
-          correctAmount ++;
+    testCorrectResult(state) {
+      let correctAmount = 0;
+      for (let item of global.toResultTest(state.answerObjectsArray)) {
+        if (item) {
+          correctAmount++;
         }
       }
 
@@ -108,18 +109,28 @@ export default new Vuex.Store({
 
     timerVal(state, getters) {
       let level = getters.levelObj.level;
-      let k = ((level + 1) / getters.levels.length)*100;
-      if(k <= 30) {
+      let k = ((level + 1) / getters.levels.length) * 100;
+      if (k <= 30) {
         return 60;
       }
-      if(k > 30 && k <= 75) {
+      if (k > 30 && k <= 75) {
         return 50;
       }
-      if(k>75 && k<=100) {
+      if (k > 75 && k <= 100) {
         return 40;
       }
     },
+
+    //sort phrase
+
+    phraseObjArr(state) {
+      return global.phrases;
+    },
+
+
   },
- 
+
+
+
   strict: process.env.NODE_ENV !== 'production', // строгий режим - позволяет изменять хранилище только через мутации
 })
